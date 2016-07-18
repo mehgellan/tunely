@@ -5,6 +5,7 @@
  *
  */
 
+ var templateFunction;
 
 /* hard-coded data! */
 var sampleAlbums = [];
@@ -12,19 +13,19 @@ sampleAlbums.push({
              artistName: 'Ladyhawke',
              name: 'Ladyhawke',
              releaseDate: '2008, November 18',
-             genres: [ 'new wave', 'indie rock', 'synth pop' ]
+             genres: [ ' new wave', ' indie rock', ' synth pop' ]
            });
 sampleAlbums.push({
              artistName: 'The Knife',
              name: 'Silent Shout',
              releaseDate: '2006, February 17',
-             genres: [ 'synth pop', 'electronica', 'experimental' ]
+             genres: [ ' synth pop', ' electronica', ' experimental' ]
            });
 sampleAlbums.push({
              artistName: 'Juno Reactor',
              name: 'Shango',
              releaseDate: '2000, October 9',
-             genres: [ 'electronic', 'goa trance', 'tribal house' ]
+             genres: [ ' electronic', ' goa trance', ' tribal house' ]
            });
 sampleAlbums.push({
              artistName: 'Philip Wesley',
@@ -39,6 +40,13 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
+  // $albumsList = $('#albums');
+  var albumHtml = $('#album-template').html();
+  templateFunction = Handlebars.compile(albumHtml);
+  sampleAlbums.forEach(function(elem) {
+    renderAlbum(elem);
+  });
+
 });
 
 
@@ -47,6 +55,7 @@ $(document).ready(function() {
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  console.log('rendering album:', album);
+  var templatedAlbumHtml = templateFunction(album);
+  $('#albums').prepend(templatedAlbumHtml);
 
 }

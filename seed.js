@@ -5,6 +5,12 @@ var db = require("./models");
 
 var albumsList =[
   // put data here!
+  {
+    artistName: 'Ladyhawke',
+    name: 'Ladyhawke',
+    releaseDate: '2008, November 18',
+    genres: [ 'new wave', 'indie rock', 'synth pop' ]
+  }
 ];
 
 db.Album.remove({}, function(err, albums){
