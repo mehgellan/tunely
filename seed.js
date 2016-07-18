@@ -1,17 +1,35 @@
 // This file allows us to seed our application with data
 // simply run: `node seed.js` from the root of this project folder.
 
-var db = require("./models");
+db = require("./models");
 
-var albumsList =[
   // put data here!
-  {
-    artistName: 'Ladyhawke',
-    name: 'Ladyhawke',
-    releaseDate: '2008, November 18',
-    genres: [ 'new wave', 'indie rock', 'synth pop' ]
-  }
-];
+var albumsList = [
+    {
+      artistName: 'Nine Inch Nails',
+      name: 'The Downward Spiral',
+      releaseDate: '1994, March 8',
+      genres: [ 'industrial', 'industrial metal' ]
+    },
+    {
+      artistName: 'Metallica',
+      name: 'Metallica',
+      releaseDate: '1991, August 12',
+      genres: [ 'heavy metal' ]
+    },
+    {
+      artistName: 'The Prodigy',
+      name: 'Music for the Jilted Generation',
+      releaseDate: '1994, July 4',
+      genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ]
+    },
+    {
+      artistName: 'Johnny Cash',
+      name: 'Unchained',
+      releaseDate: '1996, November 5',
+      genres: [ 'country', 'rock' ]
+    }
+  ];
 
 db.Album.remove({}, function(err, albums){
 
