@@ -33,7 +33,11 @@ $(document).ready(function() {
 
   $.get('/api/albums', onSuccess);
 
-
+  $('#albums').on('click', '.add-song', function(e) {
+    console.log('Add song button clicked');
+    var id = $(this).closest('.album').data('album-id');
+    console.log('id', id);
+  });
 
 });
 

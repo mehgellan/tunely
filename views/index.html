@@ -101,7 +101,7 @@
 
       <!-- one album -->
       <script id="album-template" type="text/x-handlebars-template">
-        <div class="row album">
+        <div class="row album" data-album-id="{{_id}}">
           <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-body">
@@ -133,11 +133,17 @@
                         <h4 class="inline-header">Genre(s):</h4>
                         <span class="album-genres">{{genres}}</span>
                       </li>
+
+                      <li class="list-group-item">
+                        <h4 class="inline-header">Songs:</h4>
+                        <span class="album-songs">{{#each songs}}--({{trackNumber}}) {{name}}{{/each}}</span>
+                      </li>
                     </ul>
                   </div>
                 </div>
                 <!-- end of album internal row -->
                 <div class='panel-footer'>
+                  <button class="btn btn-info add-song">Add Song</button>
                 </div>
 
               </div>
@@ -155,7 +161,7 @@
   </section>
 
   <!-- begin songModal: this is not visible until you call .modal() on it -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="songModal">
+  <div class="modal fade" tabindex="-1" role="dialog" id="songModal" data-ablum-id="{{_id}}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
