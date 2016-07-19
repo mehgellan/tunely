@@ -37,7 +37,13 @@ $(document).ready(function() {
     console.log('Add song button clicked');
     var id = $(this).closest('.album').data('album-id');
     console.log('id', id);
+    $('#songModal').data('album-id', id);
+    $('#songModal').modal();
   });
+
+  function handleNewSongSubmit(e) {
+    e.preventDefault();
+  }
 
 });
 
