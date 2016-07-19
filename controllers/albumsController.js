@@ -15,19 +15,25 @@ function index(req, res) {
 
 // POST /api/albums
 function create(req, res) {
-  var newAlbumEntry = new db.Album({
-    artistName: req.body.artistName,
-    name: req.body.name,
-    releaseDate: req.body.releaseDate,
-    genres: req.body.genres
+  db.Album.create(req.body, function(err, album) {
+    if (err) { console.log('ERROR', err); }
+    console.log('NEW ALBUM', album);
+    res.json(album);
   });
-  console.log('NEW ALBUM MADE: ', newAlbumEntry);
+}
+  // var newAlbumEntry = new db.Album({
+  //   artistName: req.body.artistName,
+  //   name: req.body.name,
+  //   releaseDate: req.body.releaseDate,
+  //   genres: req.body.genres
+  // });
+  // console.log('NEW ALBUM MADE: ', newAlbumEntry);
   // newAlbumEntry.save(function(err, savedAlbum) {
   //   if (err) { console.log("SAVE ERROR"); }
   //   res.json(savedAlbum);
   //   console.log("ALBUM SAVED", savedAlbum);
   // });
-}
+
 
 function show(req, res) {
   // FILL ME IN !

@@ -24,16 +24,11 @@ $(document).ready(function() {
     // same as ajax POST
     $.post('/api/albums', formData, function(album) {
       console.log("POST NEW ALBUM SUCCESS", album.name);
-      $('form input').val('');
+      renderAlbum(album);
+      // $(this).trigger('reset'); // another option to clear the form
     });
-    // $.ajax({
-    //   method: 'POST',
-    //   url: '/api/albums',
-    //   data: formData,
-    //   success: newAlbumSuccess,
-    //   // error: newAlbumError
-    // });
     console.log("FORM DATA", formData);
+    $('form input').val('');
   });
 
   $.get('/api/albums', onSuccess);
