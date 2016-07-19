@@ -15,7 +15,13 @@ function index(req, res) {
 
 // POST /api/albums
 function create(req, res) {
-  db.Album.create(req.body, function(err, album) {
+  var genres = req.body.genres.split(',');
+  genres = genres.map(function(item) {
+    return item.trim();
+  });
+  var newAlbum = req.body;
+  newAlbum.genres = genres;
+  db.Album.create(newAlbum, function(err, album) {
     if (err) { console.log('ERROR', err); }
     console.log('NEW ALBUM', album);
     res.json(album);
