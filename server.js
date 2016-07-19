@@ -43,6 +43,8 @@ app.get('/api/albums', controllers.albums.index);
 
 app.post('/api/albums', controllers.albums.create);
 
+app.post('/api/albums/:album_id/songs', controllers.albums.create);
+
 /**********
  * SERVER *
  **********/

@@ -41,9 +41,8 @@ $(document).ready(function() {
     $('#songModal').modal();
   });
 
-  function handleNewSongSubmit(e) {
-    e.preventDefault();
-  }
+  // POST new song on button click
+  $('#saveSong').on('click', handleNewSongSubmit);
 
 });
 
@@ -55,19 +54,26 @@ function onSuccess(json) {
   });
 }
 
-// create route -- post new album
+function handleNewSongSubmit(e) {
+  e.preventDefault();
+  // get data from modal fields -- Song name & track number
+  var $modal = $('#songModal');
+  var $songNameInput = $modal.find('#songName');
+  var $trackNumberInput = $modal.find('#trackNumber');
+  var songData = {
+    name: $songNameInput.val(),
+    trackNumber: $trackNumberInput.val()
+  };
 
-
-// function newAlbumError() {
-//   console.log("NEW ALBUM ERROR");
-// }
-
-
-
-
-
-
-
+  // get album id
+  var albumId = $modal.data('album-id');
+  console.log(albumId);
+  // post to server
+  var songPostUrl = ('/api/albums/' + albumId + '/songs');
+  $.post(songPostUrl, songData, function(song) {
+    console.log(song);
+  });
+}
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
