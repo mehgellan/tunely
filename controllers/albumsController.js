@@ -13,8 +13,20 @@ function index(req, res) {
   });
 }
 
+// POST /api/albums
 function create(req, res) {
-  // FILL ME IN !
+  var newAlbumEntry = new db.Album({
+    artistName: req.body.artistName,
+    name: req.body.name,
+    releaseDate: req.body.releaseDate,
+    genres: req.body.genres
+  });
+  console.log('NEW ALBUM MADE: ', newAlbumEntry);
+  // newAlbumEntry.save(function(err, savedAlbum) {
+  //   if (err) { console.log("SAVE ERROR"); }
+  //   res.json(savedAlbum);
+  //   console.log("ALBUM SAVED", savedAlbum);
+  // });
 }
 
 function show(req, res) {
