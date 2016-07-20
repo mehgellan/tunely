@@ -56,7 +56,7 @@ function onSuccess(json) {
 
 function handleNewSongSubmit(e) {
   e.preventDefault();
-  // get data from modal fields -- Song name & track number
+  // get song/track data from modal inputs
   var $modal = $('#songModal');
   var $songNameInput = $modal.find('#songName');
   var $trackNumberInput = $modal.find('#trackNumber');
@@ -64,14 +64,24 @@ function handleNewSongSubmit(e) {
     name: $songNameInput.val(),
     trackNumber: $trackNumberInput.val()
   };
-
   // get album id
   var albumId = $modal.data('album-id');
   console.log(albumId);
   // post to server
   var songPostUrl = ('/api/albums/' + albumId + '/songs');
   $.post(songPostUrl, songData, function(song) {
-    console.log(song);
+    console.log('NEW SONG POSTED', song);
+    // CLEAR THE MODAL FORM
+    $songNameInput.val('');
+    $trackNumberInput.val('');
+    $modal.modal('hide');
+    // GRAB THE CURRENT ALBUM
+    $.get('/api/albums/' + albumId, function(data) {
+      // REMOVE IT B/C IT DOESN'T HAVE THE NEW SONG YET
+      $('[data-ablum-id=' + albumId + ']').remove();
+      // RENDER IT TO THE PAGE W/ THE NEW SONG
+      renderAlbum(data);
+    });
   });
 }
 
