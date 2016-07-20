@@ -39,7 +39,11 @@ function show(req, res) {
 }
 
 function destroy(req, res) {
-  // FILL ME IN !
+  var albumId = req.params.album_id;
+  db.Album.findOneAndRemove({_id: albumId}, function(err, deletedAlbum) {
+    console.log('DELETED', deletedAlbum);
+    res.json(deletedAlbum);
+  });
 }
 
 function update(req, res) {

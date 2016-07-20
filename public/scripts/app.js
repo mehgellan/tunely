@@ -11,13 +11,14 @@
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-  // $albumsList = $('#albums');
+  // HANDLEBARS TEMPLATING
   var albumHtml = $('#album-template').html();
   templateFunction = Handlebars.compile(albumHtml);
   albumsList.forEach(function(elem) {
     renderAlbum(elem);
   });
 
+  // HANDLE NEW ALBUM POST ON FORM SUBMISSION
   $('#album-form form').on('submit', function(e) {
     e.preventDefault();
     var formData = $(this).serialize();
@@ -34,14 +35,16 @@ $(document).ready(function() {
   $.get('/api/albums', onSuccess);
 
   $('#albums').on('click', '.add-song', function(e) {
-    console.log('Add song button clicked');
     var id = $(this).closest('.album').data('album-id');
     console.log('id', id);
     $('#songModal').data('album-id', id);
     $('#songModal').modal();
   });
 
-  // POST new song on button click
+  // DELETE ALBUM ON CLICK
+  $('#albums').on('click', '.delete-album', handleAlbumDelete);
+
+  // POST NEW SONG ON CLICK
   $('#saveSong').on('click', handleNewSongSubmit);
 
 });
@@ -83,6 +86,23 @@ function handleNewSongSubmit(e) {
       renderAlbum(data);
     });
   });
+}
+
+// DELETE
+function handleAlbumDelete(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  $.ajax({
+    method: 'DELETE',
+    url: '/api/albums/' + albumId,
+    success: deleteAlbumSuccess
+  });
+}
+
+// DELETE
+function deleteAlbumSuccess(data) {
+  var deletedAlbumId = data._id;
+  console.log('DELETED ALBUM', deletedAlbumId);
+  $('div[data-album-id =' + deletedAlbumId + ']').remove();
 }
 
 // this function takes a single album and renders it to the page
