@@ -32,8 +32,10 @@ $(document).ready(function() {
     $('form input').val('');
   });
 
+  // GET ALL ALBUMS
   $.get('/api/albums', onSuccess);
 
+  // ADD SONG ON CLICK
   $('#albums').on('click', '.add-song', function(e) {
     var id = $(this).closest('.album').data('album-id');
     console.log('id', id);
@@ -47,9 +49,15 @@ $(document).ready(function() {
   // POST NEW SONG ON CLICK
   $('#saveSong').on('click', handleNewSongSubmit);
 
+  // EDIT ALBUM ON CLICK
+  $('#albums').on('click', '.edit-album', handleAlbumEdit);
+
+  // SAVE EDITED ALBUM ON CLICK
+  $('#albums').on('click', '.save-album', handleAlbumSave);
+
 });
 
-// index route -- find all albums
+// index --- find all albums
 function onSuccess(json) {
   console.log('FOUND ALL ALBUMS');
   json.forEach(function(album) {
@@ -57,6 +65,7 @@ function onSuccess(json) {
   });
 }
 
+// POST NEW SONG ON SUBMIT
 function handleNewSongSubmit(e) {
   e.preventDefault();
   // get song/track data from modal inputs
@@ -98,14 +107,32 @@ function handleAlbumDelete(e) {
   });
 }
 
-// DELETE
+// DELETE CLICK SUCCESS
 function deleteAlbumSuccess(data) {
   var deletedAlbumId = data._id;
   console.log('DELETED ALBUM', deletedAlbumId);
   $('div[data-album-id =' + deletedAlbumId + ']').remove();
 }
 
-// this function takes a single album and renders it to the page
+// EDIT
+function handleAlbumEdit(e) {
+  console.log('EDIT ALBUM CLICKED');
+  var albumId = $(this).parents('.album').data('album-id');
+  $.ajax({
+    method: 'UPDATE',
+    url: '/api/albums/' + albumId,
+    data: ???,
+    success: updatedAlbumSuccess
+  });
+}
+
+// EDIT CLICK SUCCESS
+function updatedAlbumSuccess(data) {
+  var updatedAlbumId = data._id;
+  console.log('UPDATED ALBUM', updatedAlbumId);
+}
+
+// RENDER
 function renderAlbum(album) {
   var templatedAlbumHtml = templateFunction(album);
   $('#albums').prepend(templatedAlbumHtml);

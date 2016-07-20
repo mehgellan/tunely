@@ -47,7 +47,18 @@ function destroy(req, res) {
 }
 
 function update(req, res) {
-  // FILL ME IN !
+  var albumId = req.params.album_id;
+  db.Album.findById(albumId, function(err, foundAlbum) {
+    if (err) { res.sendStatus(404); }
+    console.log(foundAlbum);
+    foundAlbum.name = req.body.name;
+    foundAlbum.artistName = req.body.artistName;
+    foundAlbum.releaseDate = req.body.releaseDate;
+    foundAlbum.save(function(err, savedAlbum) {
+      if (err) { console.log('UNABLE TO SAVE'); }
+      res.json(savedAlbum);
+    });
+  });
 }
 
 

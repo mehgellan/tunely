@@ -49,6 +49,8 @@ app.post('/api/albums/:album_id/songs', controllers.albumsSongs.create);
 
 app.delete('/api/albums/:album_id', controllers.albums.destroy);
 
+app.put('/api/albums/:album_id', controllers.albums.update);
+
 
 /**********
  * SERVER *
