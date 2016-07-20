@@ -116,20 +116,42 @@ function deleteAlbumSuccess(data) {
 
 // EDIT
 function handleAlbumEdit(e) {
-  console.log('EDIT ALBUM CLICKED');
-  var albumId = $(this).parents('.album').data('album-id');
-  $.ajax({
-    method: 'UPDATE',
-    url: '/api/albums/' + albumId,
-    data: ???,
-    success: updatedAlbumSuccess
-  });
+  var $albumRow = $(this).parents('.album');
+  var albumId = $albumRow.data('album-id');
+  console.log('EDIT ALBUM', albumId);
+
+  $albumRow.find('.save-album').toggleClass('hidden');
+  $albumRow.find('.edit-album').toggleClass('hidden');
+
+  var albumName = $albumRow.find('span.album-name').text();
+  $albumRow.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
+
+  var artistName = $albumRow.find('span.artist-name').text();
+  $albumRow.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
+
+  var releaseDate = $albumRow.find('span.album-releaseDate').text();
+  $albumRow.find('span.album-releaseDate').html('<input class="edit-album-releaseDate" value="' + releaseDate + '"></input>');
 }
 
 // EDIT CLICK SUCCESS
-function updatedAlbumSuccess(data) {
-  var updatedAlbumId = data._id;
+function handleAlbumSave(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  var $albumRow = $('[data-album-id=' + albumId + ']');
   console.log('UPDATED ALBUM', updatedAlbumId);
+  // GRAB DATA FROM THE ALBUM
+  var data = {
+    name: $albumRow.find('.edit-album-name').val(),
+    artistName: $albumRow.find('.edit-artist-name').val(),
+    releaseDate: $albumRow.find('.edit-album-releaseDate').val()
+  };
+  console.log(albumId, data);
+
+  $.ajax({
+    method: 'PUT',
+    url: '/api/albums/' + albumId,
+    data: data,
+    success: updatedAlbumSuccess
+  });
 }
 
 // RENDER
